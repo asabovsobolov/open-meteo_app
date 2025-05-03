@@ -11,6 +11,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 import javafx.application.Platform;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import java.util.Iterator;
+import java.util.Map;
 
 public class PanelChart {
 
@@ -20,42 +24,82 @@ public class PanelChart {
     private LineChart<String, Number> lineChart;
 
     void Init(String url){
-        new Fetcher().fetchData("https://api.github.com", new DataCallback() {
-            @Override
-            public void onSuccess(String data) {
-                ProcessData(data);
+
+        //Check Cache
+        String cached = RedisCacheService.getCachedData(url);
+        if(cached != null){
+            ProcessData(cached);
+            return;
+        }
+
+        //Fetch and Cache
+        new Fetcher().fetchData(url, new DataCallback() {
+            @Override public void onSuccess(String data) {
+                //try
+                if(ProcessData(data))
+                    //cache
+                    RedisCacheService.cacheData(url, data, 5);
+                else
+                    FailedData();
             }
 
-            @Override
-            public void onFailure(Exception e) {
-                testText.setText("Failed: " + e.getMessage());
+            @Override public void onFailure(Exception e) {
+                FailedData();
             }
         });
     }
 
-    void ProcessData(String response){
-        testText.setText(response);
+    //returns true if data is vaild
+    boolean ProcessData(String response){
 
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("gagaga");
-        series.getData().add(new XYChart.Data<>("1", 5));
-        series.getData().add(new XYChart.Data<>("2", 10));
-        series.getData().add(new XYChart.Data<>("3", 20));
-        series.getData().add(new XYChart.Data<>("4", 13));
-        series.getData().add(new XYChart.Data<>("5", 12));
-        series.getData().add(new XYChart.Data<>("6", 1));
-        lineChart.getData().add(series);
 
-        series = new XYChart.Series<>();
-        series.setName("gagaga");
-        series.getData().add(new XYChart.Data<>("-1", 5));
-        series.getData().add(new XYChart.Data<>("2", 30));
-        series.getData().add(new XYChart.Data<>("3", 30));
-        series.getData().add(new XYChart.Data<>("4", 33));
-        series.getData().add(new XYChart.Data<>("5", 32));
-        series.getData().add(new XYChart.Data<>("6", 3));
+        try{
+            //json
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode json = mapper.readTree(response);
 
-        lineChart.getData().add(series);
+            //units
+            JsonNode units = json.get("hourly_units");
+
+            //time
+            json = json.get("hourly");
+            JsonNode dx = json.get("time");
+            JsonNode dy;
+
+            //
+            XYChart.Series<String, Number> series;
+            Iterator<Map.Entry<String, JsonNode>> fields = json.fields();
+            int i;
+            int f = dx.size();
+            while(fields.hasNext()){
+                //get key different from time
+                String paramName = fields.next().getKey();
+                if(paramName == "time")
+                    continue;
+
+                //read array
+                dy = json.get(paramName);
+                series = new XYChart.Series<>();
+                for(i = 0; i < f; i++)
+                    series.getData().add(new XYChart.Data<>(dx.get(i).asText(), dy.get(i).asDouble()));
+
+                //apply meta
+                series.setName(paramName + " [" + units.get(paramName).asText() + "]");
+
+                //apply to chart
+                lineChart.getData().add(series);
+            }
+            //value
+            return true;
+        }
+        catch(Exception e){}
+
+        //value
+        return false;
+    }
+
+    void FailedData(){
+        testText.setText("Failed: ");
     }
 
 }

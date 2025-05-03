@@ -13,7 +13,7 @@ module com.example.demo1 {
 
     //
     requires redis.clients.jedis;
-
+    requires com.fasterxml.jackson.databind;
 
     opens com.example.demo1 to javafx.fxml;
     exports com.example.demo1;

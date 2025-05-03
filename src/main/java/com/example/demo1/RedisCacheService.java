@@ -4,21 +4,23 @@ import redis.clients.jedis.Jedis;
 
 public class RedisCacheService {
 
-    private final Jedis jedis;
+    private static final Jedis jedis;
 
-    public RedisCacheService() {
-        this.jedis = new Jedis("localhost", 6379);
+    static {
+        jedis = new Jedis("localhost", 6379);
+        // Optional: test connection
+        // System.out.println("Redis connected: " + jedis.ping());
     }
 
-    public void cacheData(String key, String value, int ttlSeconds) {
+    public static void cacheData(String key, String value, int ttlSeconds) {
         jedis.setex(key, ttlSeconds, value);
     }
 
-    public String getCachedData(String key) {
+    public static String getCachedData(String key) {
         return jedis.get(key);
     }
 
-    public boolean isCached(String key) {
+    public static boolean isCached(String key) {
         return jedis.exists(key);
     }
 }

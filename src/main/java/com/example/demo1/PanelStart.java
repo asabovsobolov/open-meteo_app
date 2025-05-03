@@ -19,7 +19,6 @@ public class PanelStart {
     private Label welcomeText;
 
     private static int i = 0;
-    private final RedisCacheService cacheService = new RedisCacheService();
 
     @FXML
     protected void onHelloButtonClick() {
@@ -34,7 +33,7 @@ public class PanelStart {
 
             //init
             PanelChart controller = fxmlLoader.getController();
-            controller.Init(String.valueOf(i++));
+            controller.Init("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,wind_speed_10m&past_days=3&forecast_days=3");
 
             // Create a new Stage (window) for the new panel
             Stage stage = new Stage();
