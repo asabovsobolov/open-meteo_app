@@ -10,6 +10,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
+import javafx.application.Platform;
 
 public class PanelChart {
 
@@ -19,8 +20,21 @@ public class PanelChart {
     private LineChart<String, Number> lineChart;
 
     void Init(String url){
-        testText.setText(url);
+        new Fetcher().fetchData("https://api.github.com", new DataCallback() {
+            @Override
+            public void onSuccess(String data) {
+                ProcessData(data);
+            }
 
+            @Override
+            public void onFailure(Exception e) {
+                testText.setText("Failed: " + e.getMessage());
+            }
+        });
+    }
+
+    void ProcessData(String response){
+        testText.setText(response);
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("gagaga");
@@ -42,7 +56,6 @@ public class PanelChart {
         series.getData().add(new XYChart.Data<>("6", 3));
 
         lineChart.getData().add(series);
-
     }
 
 }
