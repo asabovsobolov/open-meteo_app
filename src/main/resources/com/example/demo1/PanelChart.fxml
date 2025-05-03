@@ -19,5 +19,6 @@
          </opaqueInsets>
       </LineChart>
       <Label fx:id="testText" layoutX="141.0" layoutY="5.0" text="d" />
+      <Button fx:id="buttonExport" layoutX="279.0" layoutY="355.0" mnemonicParsing="false" onAction="#Export" text="Eksport do .txt" />
    </children>
 </AnchorPane>

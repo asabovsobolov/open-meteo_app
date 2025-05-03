@@ -1,6 +1,7 @@
 package com.example.demo1;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 
@@ -15,14 +16,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Iterator;
 import java.util.Map;
+import javafx.stage.FileChooser;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class PanelChart {
 
-    @FXML
-    private Label testText;
-    @FXML
-    private LineChart<String, Number> lineChart;
 
+    //GUI
+    @FXML private Label testText;
+    @FXML private LineChart<String, Number> lineChart;
+    @FXML private Button buttonExport;
+
+    //vars
+    private JsonNode data = null;
+
+    //Init
     void Init(String url){
 
         //Check Cache
@@ -51,12 +61,11 @@ public class PanelChart {
 
     //returns true if data is vaild
     boolean ProcessData(String response){
-
-
         try{
             //json
             ObjectMapper mapper = new ObjectMapper();
             JsonNode json = mapper.readTree(response);
+            data = json;
 
             //units
             JsonNode units = json.get("hourly_units");
@@ -98,8 +107,28 @@ public class PanelChart {
         return false;
     }
 
+    public void Export(){
+        //block null data
+        if(data == null)
+            return;
+
+        //save
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Eksportuj do...");
+        FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("Text Files", "*.txt");
+        fileChooser.getExtensionFilters().add(txtFilter);
+        File file = fileChooser.showSaveDialog(buttonExport.getScene().getWindow());
+        if(file != null){
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(data));
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //Failure
     void FailedData(){
         testText.setText("Failed: ");
     }
-
 }
