@@ -4,10 +4,11 @@
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="415.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.PanelChart">
+<AnchorPane prefHeight="399.0" prefWidth="519.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.PanelChart">
    <children>
-      <LineChart fx:id="lineChart" animated="false" layoutX="7.0" layoutY="5.0" prefHeight="345.0" prefWidth="633.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <LineChart fx:id="lineChart" animated="false" layoutX="7.0" layoutY="48.0" prefHeight="291.0" prefWidth="509.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="48.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -18,7 +19,10 @@
             <Insets />
          </opaqueInsets>
       </LineChart>
-      <Label fx:id="testText" layoutX="141.0" layoutY="5.0" text="d" />
-      <Button fx:id="buttonExport" layoutX="279.0" layoutY="355.0" mnemonicParsing="false" onAction="#Export" text="Eksport do .txt" />
+      <Label fx:id="testText" alignment="CENTER" contentDisplay="CENTER" layoutX="47.0" layoutY="14.0" text="Title of this chart" textAlignment="CENTER" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <Button fx:id="buttonExport" alignment="CENTER" layoutX="14.0" layoutY="360.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#Export" text="Eksport do .txt" textAlignment="CENTER" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" />
    </children>
 </AnchorPane>

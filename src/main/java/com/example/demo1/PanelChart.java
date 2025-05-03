@@ -115,7 +115,7 @@ public class PanelChart {
         //save
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Eksportuj do...");
-        FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("Text Files", "*.txt");
+        FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("Plik tekstowo JSONowy", "*.txt");
         fileChooser.getExtensionFilters().add(txtFilter);
         File file = fileChooser.showSaveDialog(buttonExport.getScene().getWindow());
         if(file != null){
