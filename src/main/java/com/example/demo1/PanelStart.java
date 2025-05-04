@@ -1,8 +1,7 @@
 package com.example.demo1;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
 
 import javafx.fxml.FXML;
@@ -17,15 +16,23 @@ import java.io.IOException;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 
 public class PanelStart {
 
     @FXML private Button buttonChart;
+    @FXML private DatePicker dateStart;
+    @FXML private DatePicker dateEnd;
+
+    public void Init(){
+        LocalDate today = LocalDate.now();
+        dateStart.setValue(today.minusDays(1)); // Yesterday
+        dateEnd.setValue(today.plusDays(1));    // Tomorrow
+    }
 
     private void findCheckBoxes(Parent parent, List<CheckBox> checkBoxes) {
         for (Node node : parent.getChildrenUnmodifiable()) {
@@ -67,7 +74,10 @@ public class PanelStart {
         }
 
         //add dates
-        url += "&start_date=2025-04-26&end_date=2025-05-10";
+        url += "&start_date=";
+        url += dateStart.getValue().toString();
+        url += "&end_date=";
+        url += dateEnd.getValue().toString();
 
         System.out.println(url);
 
