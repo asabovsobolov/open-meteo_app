@@ -33,9 +33,8 @@ public class PanelStart {
     @FXML private DatePicker dateStart;
     @FXML private DatePicker dateEnd;
     @FXML private ChoiceBox choiceType;
-
-
-
+    @FXML private TextField numericLatitude;
+    @FXML private TextField numericLongitude;
 
     public void Init(){
         //dates
@@ -46,6 +45,14 @@ public class PanelStart {
         //choiceType
         choiceType.getItems().addAll(dataTypes);
         choiceType.setValue(dataTypes[0]);
+
+        //numeric types
+        numericLatitude.setTextFormatter(new TextFormatter<>(change -> {
+            return change.getControlNewText().matches("\\d*(\\.\\d*)?") ? change : null;
+        }));
+        numericLongitude.setTextFormatter(new TextFormatter<>(change -> {
+            return change.getControlNewText().matches("\\d*(\\.\\d*)?") ? change : null;
+        }));
     }
 
     private static String findDataTypeName(String dataType) {
@@ -75,7 +82,7 @@ public class PanelStart {
         }
 
         //latidue longitude
-        url += "latitude=10&longitude=8";
+        url += "latitude=" + numericLatitude.getText() + "&longitude=" + numericLongitude.getText();
 
         //interval
         url += "&hourly=";
