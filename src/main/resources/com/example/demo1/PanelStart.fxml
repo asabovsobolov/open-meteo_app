@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="103.0" prefWidth="239.0" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.example.demo1.PanelStart">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
+<AnchorPane prefHeight="400.0" prefWidth="779.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.PanelStart">
+   <children>
+      <Button fx:id="buttonChart" layoutX="20.0" layoutY="226.0" mnemonicParsing="false" onAction="#onButtonChartClicked" text="View Chart" />
+      <CheckBox layoutX="5.0" layoutY="5.0" mnemonicParsing="false" text="Temperature (2 m)" userData="temperature_2m" AnchorPane.leftAnchor="5.0" />
+      <CheckBox layoutX="5.0" layoutY="22.0" mnemonicParsing="false" text="Relative Humidity (2 m)" userData="relative_humidity_2m" AnchorPane.leftAnchor="5.0" />
+      <CheckBox layoutX="5.0" layoutY="39.0" mnemonicParsing="false" text="Dewpoint (2 m)" userData="dew_point_2m" AnchorPane.leftAnchor="5.0" />
+      <CheckBox layoutX="6.0" layoutY="56.0" mnemonicParsing="false" text="Apparent Temperature" userData="apparent_temperature" AnchorPane.leftAnchor="5.0" />
+      <CheckBox layoutX="7.0" layoutY="73.0" mnemonicParsing="false" text="Precipitation Probability" userData="precipitation_probability" AnchorPane.leftAnchor="5.0" />
+      <CheckBox layoutX="5.0" layoutY="90.0" mnemonicParsing="false" text="Precipitation (rain + showers + snow)" AnchorPane.leftAnchor="5.0" />
+      <CheckBox layoutX="6.0" layoutY="107.0" mnemonicParsing="false" text="Rain" userData="rain" AnchorPane.leftAnchor="5.0" />
+      <CheckBox layoutX="5.0" layoutY="124.0" mnemonicParsing="false" text="Showers" userData="showers" AnchorPane.leftAnchor="5.0" />
+      <CheckBox layoutX="5.0" layoutY="141.0" mnemonicParsing="false" text="Snowfall" userData="snowfall" AnchorPane.leftAnchor="5.0" />
+      <CheckBox layoutX="5.0" layoutY="158.0" mnemonicParsing="false" text="Snow Depth" userData="snow_depth" AnchorPane.leftAnchor="5.0" />
+      <CheckBox layoutX="224.0" layoutY="5.0" mnemonicParsing="false" text="Weather code" userData="weather_code" AnchorPane.leftAnchor="224.0" />
+      <CheckBox layoutX="224.0" layoutY="22.0" mnemonicParsing="false" text="Sealevel Pressure" userData="pressure_msl" AnchorPane.leftAnchor="224.0" />
+      <CheckBox layoutX="224.0" layoutY="39.0" mnemonicParsing="false" text="Surface Pressure" userData="surface_pressure" AnchorPane.leftAnchor="224.0" />
+      <CheckBox layoutX="224.0" layoutY="56.0" mnemonicParsing="false" text="Cloud cover Total" userData="cloud_cover" AnchorPane.leftAnchor="224.0" />
+      <CheckBox layoutX="224.0" layoutY="73.0" mnemonicParsing="false" text="Cloud cover Low" userData="cloud_cover_low" AnchorPane.leftAnchor="224.0" />
+      <CheckBox layoutX="224.0" layoutY="90.0" mnemonicParsing="false" text="Cloud cover Mid" userData="cloud_cover_mid" AnchorPane.leftAnchor="224.0" />
+      <CheckBox layoutX="224.0" layoutY="107.0" mnemonicParsing="false" text="Cloud cover High" userData="cloud_cover_high" AnchorPane.leftAnchor="224.0" />
+      <CheckBox layoutX="224.0" layoutY="124.0" mnemonicParsing="false" text="Visibility" userData="visibility" AnchorPane.leftAnchor="224.0" />
+      <CheckBox layoutX="224.0" layoutY="141.0" mnemonicParsing="false" text="Evapotranspiration" userData="evapotranspiration" AnchorPane.leftAnchor="224.0" />
+      <CheckBox layoutX="224.0" layoutY="158.0" mnemonicParsing="false" text="Reference Evapotranspiration (ET₀)" userData="et0_fao_evapotranspiration" AnchorPane.leftAnchor="224.0" />
+      <CheckBox layoutX="224.0" layoutY="175.0" mnemonicParsing="false" text="Vapour Pressure Deficit" userData="vapour_pressure_deficit" AnchorPane.leftAnchor="224.0" />
 
-    <Label fx:id="welcomeText" />
-    <Button onAction="#onHelloButtonClick" prefHeight="25.0" prefWidth="66.0" text="Hello!" />
-</VBox>
+
+      <CheckBox layoutX="429.0" layoutY="5.0" mnemonicParsing="false" text="Wind Speed (10 m)" userData="wind_speed_10m" AnchorPane.leftAnchor="429.0" />
+      <CheckBox layoutX="429.0" layoutY="22.0" mnemonicParsing="false" text="Wind Speed (80 m)" userData="wind_speed_80m" AnchorPane.leftAnchor="429.0" />
+      <CheckBox layoutX="429.0" layoutY="39.0" mnemonicParsing="false" text="Wind Speed (120 m)" userData="wind_speed_120m" AnchorPane.leftAnchor="429.0" />
+      <CheckBox layoutX="429.0" layoutY="56.0" mnemonicParsing="false" text="Wind Speed (180 m)" userData="wind_speed_180m" AnchorPane.leftAnchor="429.0" />
+      <CheckBox layoutX="429.0" layoutY="73.0" mnemonicParsing="false" text="Wind Direction (10 m)" userData="wind_direction_10m" AnchorPane.leftAnchor="429.0" />
+      <CheckBox layoutX="429.0" layoutY="90.0" mnemonicParsing="false" text="Wind Direction (80 m)" userData="wind_direction_80m" AnchorPane.leftAnchor="429.0" />
+      <CheckBox layoutX="429.0" layoutY="107.0" mnemonicParsing="false" text="Wind Direction (120 m)" userData="wind_direction_120m" AnchorPane.leftAnchor="429.0" />
+      <CheckBox layoutX="429.0" layoutY="124.0" mnemonicParsing="false" text="Wind Direction (180 m)" userData="wind_direction_180m" AnchorPane.leftAnchor="429.0" />
+      <CheckBox layoutX="429.0" layoutY="141.0" mnemonicParsing="false" text="Wind Gusts (10 m)" userData="wind_gusts_10m" AnchorPane.leftAnchor="429.0" />
+      <CheckBox layoutX="429.0" layoutY="158.0" mnemonicParsing="false" text="Temperature (80 m)" userData="temperature_80m" AnchorPane.leftAnchor="429.0" />
+      <CheckBox layoutX="429.0" layoutY="175.0" mnemonicParsing="false" text="Temperature (120 m)" userData="temperature_120m" AnchorPane.leftAnchor="429.0" />
+      <CheckBox layoutX="429.0" layoutY="191.0" mnemonicParsing="false" text="Temperature (180 m)" userData="temperature_180m" AnchorPane.leftAnchor="429.0" />
+
+
+      <CheckBox layoutX="574.0" layoutY="5.0" mnemonicParsing="false" text="Soil Temperature (0 cm)" userData="soil_temperature_0cm" AnchorPane.leftAnchor="574.0" />
+      <CheckBox layoutX="574.0" layoutY="22.0" mnemonicParsing="false" text="Soil Temperature (6 cm)" userData="soil_temperature_6cm" AnchorPane.leftAnchor="574.0" />
+      <CheckBox layoutX="574.0" layoutY="39.0" mnemonicParsing="false" text="Soil Temperature (18 cm)" userData="soil_temperature_18cm" AnchorPane.leftAnchor="574.0" />
+      <CheckBox layoutX="574.0" layoutY="56.0" mnemonicParsing="false" text="Soil Temperature (54 cm)" userData="soil_temperature_54cm" AnchorPane.leftAnchor="574.0" />
+      <CheckBox layoutX="574.0" layoutY="73.0" mnemonicParsing="false" text="Soil Moisture (0-1 cm)" userData="soil_moisture_0_to_1cm" AnchorPane.leftAnchor="574.0" />
+      <CheckBox layoutX="574.0" layoutY="90.0" mnemonicParsing="false" text="Soil Moisture (1-3 cm)" userData="soil_moisture_1_to_3cm" AnchorPane.leftAnchor="574.0" />
+      <CheckBox layoutX="574.0" layoutY="107.0" mnemonicParsing="false" text="Soil Moisture (3-9 cm)" userData="soil_moisture_3_to_9cm" AnchorPane.leftAnchor="574.0" />
+      <CheckBox layoutX="574.0" layoutY="124.0" mnemonicParsing="false" text="Soil Moisture (9-27 cm)" userData="soil_moisture_9_to_27cm" AnchorPane.leftAnchor="574.0" />
+      <CheckBox layoutX="574.0" layoutY="141.0" mnemonicParsing="false" text="Soil Moisture (27-81 cm)" userData="soil_moisture_27_to_81cm" AnchorPane.leftAnchor="574.0" />
+   </children>
+</AnchorPane>
