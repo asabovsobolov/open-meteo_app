@@ -3,6 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.collections.FXCollections?>
+
+
+
 <AnchorPane prefHeight="400.0" prefWidth="779.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.PanelStart">
    <children>
       <Button fx:id="buttonChart" layoutX="708.0" layoutY="251.0" mnemonicParsing="false" onAction="#onButtonChartClicked" text="View Chart" AnchorPane.rightAnchor="4.263256414560601E-14" AnchorPane.topAnchor="251.0" />
@@ -56,5 +62,6 @@
       <DatePicker fx:id="dateEnd" layoutX="247.0" layoutY="5.0" AnchorPane.leftAnchor="247.0" />
       <Label layoutY="9.0" text="Start:" AnchorPane.leftAnchor="0.0" />
       <Label layoutX="215.0" layoutY="9.0" text="End:" AnchorPane.leftAnchor="215.0" />
+      <ChoiceBox fx:id="choiceType" layoutX="440.0" layoutY="5.0" prefWidth="150.0"/>
    </children>
 </AnchorPane>

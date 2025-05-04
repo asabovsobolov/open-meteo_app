@@ -24,14 +24,35 @@ import java.time.LocalDate;
 
 public class PanelStart {
 
+    //consts
+    public static String[] dataTypes = {"Forecast", "Archive"};
+    public static String[] dataTypesSRC = {"https://api.open-meteo.com/v1/forecast?", "https://archive-api.open-meteo.com/v1/archive?"};
+
+    //GUI
     @FXML private Button buttonChart;
     @FXML private DatePicker dateStart;
     @FXML private DatePicker dateEnd;
+    @FXML private ChoiceBox choiceType;
+
+
+
 
     public void Init(){
+        //dates
         LocalDate today = LocalDate.now();
         dateStart.setValue(today.minusDays(1)); // Yesterday
         dateEnd.setValue(today.plusDays(1));    // Tomorrow
+
+        //choiceType
+        choiceType.getItems().addAll(dataTypes);
+        choiceType.setValue(dataTypes[0]);
+    }
+
+    private static String findDataTypeName(String dataType) {
+        for(int i = 0; i < dataTypes.length; i++)
+            if(dataTypes[i].equalsIgnoreCase(dataType))
+                return dataTypesSRC[i];
+        return null; // or throw an exception if not found
     }
 
     private void findCheckBoxes(Parent parent, List<CheckBox> checkBoxes) {
@@ -47,8 +68,11 @@ public class PanelStart {
     //Chart button clicked
     @FXML protected void onButtonChartClicked() {
         //compose API request
-        String url;
-        url = "https://api.open-meteo.com/v1/forecast?";
+        String url = findDataTypeName(choiceType.getValue().toString());
+        if(url == null){
+            //error
+            return;
+        }
 
         //latidue longitude
         url += "latitude=10&longitude=8";

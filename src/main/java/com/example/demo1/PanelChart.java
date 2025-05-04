@@ -2,6 +2,7 @@ package com.example.demo1;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 
 
@@ -22,7 +23,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class PanelChart {
-
 
     //GUI
     @FXML private Label testText;
