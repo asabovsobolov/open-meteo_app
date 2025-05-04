@@ -56,11 +56,15 @@
       <DatePicker fx:id="dateEnd" layoutX="247.0" layoutY="35.0" AnchorPane.leftAnchor="247.0" />
       <Label layoutY="39.0" text="Start:" AnchorPane.leftAnchor="0.0" />
       <Label layoutX="215.0" layoutY="39.0" text="End:" AnchorPane.leftAnchor="215.0" />
-      <ChoiceBox fx:id="choiceType" layoutX="467.0" layoutY="35.0" prefWidth="150.0" AnchorPane.leftAnchor="467.0" />
+      <ChoiceBox fx:id="choiceDataType" layoutX="467.0" layoutY="35.0" prefWidth="150.0" AnchorPane.leftAnchor="467.0" />
       <Label layoutX="430.0" layoutY="39.0" text="Type:" AnchorPane.leftAnchor="430.0" />
-      <TextField fx:id="numericLatitude" layoutX="52.0" layoutY="1.0" prefHeight="25.0" prefWidth="87.0" text="0" AnchorPane.leftAnchor="52.0" />
-      <Label layoutY="5.0" text="Latitude:" AnchorPane.leftAnchor="0.0" />
-      <Label layoutX="149.0" layoutY="5.0" text="Longitude:" AnchorPane.leftAnchor="149.0" />
-      <TextField fx:id="numericLongitude" layoutX="215.0" layoutY="1.0" prefHeight="25.0" prefWidth="87.0" text="0" AnchorPane.leftAnchor="215.0" />
+      <TextField fx:id="numericLatitude" layoutX="304.0" layoutY="1.0" prefHeight="25.0" prefWidth="87.0" text="0" visible="false" AnchorPane.leftAnchor="304.0" />
+      <Label fx:id="labelLatitude" layoutX="252.0" layoutY="5.0" text="Latitude:" visible="false" AnchorPane.leftAnchor="252.0" />
+      <Label fx:id="labelLongitude" layoutX="401.0" layoutY="5.0" text="Longitude:" visible="false" AnchorPane.leftAnchor="401.0" />
+      <TextField fx:id="numericLongitude" layoutX="467.0" layoutY="1.0" prefHeight="25.0" prefWidth="87.0" text="0" visible="false" AnchorPane.leftAnchor="467.0" />
+      <Label layoutX="5.0" layoutY="5.0" text="Location Type:" AnchorPane.leftAnchor="5.0" />
+      <ChoiceBox fx:id="choiceLocationType" layoutX="87.0" layoutY="1.0" onAction="#onChoiceLocationTypeSelect" prefWidth="150.0" AnchorPane.leftAnchor="87.0" />
+      <Label fx:id="labelCity" layoutX="247.0" layoutY="5.0" text="City:" AnchorPane.leftAnchor="247.0" />
+      <ChoiceBox fx:id="choiceCity" layoutX="273.0" layoutY="1.0" prefWidth="150.0" AnchorPane.leftAnchor="273.0" />
    </children>
 </AnchorPane>

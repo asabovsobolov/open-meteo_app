@@ -21,30 +21,69 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import java.io.File;
+import java.io.IOException;
+
 
 public class PanelStart {
 
     //consts
     public static String[] dataTypes = {"Forecast", "Archive"};
     public static String[] dataTypesSRC = {"https://api.open-meteo.com/v1/forecast?", "https://archive-api.open-meteo.com/v1/archive?"};
+    public static String[] locationTypes = {"Latitude, Longitude", "City"};
+    public static JsonNode cities = null;
 
     //GUI
     @FXML private Button buttonChart;
     @FXML private DatePicker dateStart;
     @FXML private DatePicker dateEnd;
-    @FXML private ChoiceBox choiceType;
+    @FXML private ChoiceBox choiceDataType;
+    @FXML private ChoiceBox choiceLocationType;
+    @FXML private ChoiceBox choiceCity;
     @FXML private TextField numericLatitude;
     @FXML private TextField numericLongitude;
+    @FXML private Label labelLatitude;
+    @FXML private Label labelLongitude;
+    @FXML private Label labelCity;
 
     public void Init(){
+        //cities
+        if(cities == null){
+            try{
+                ObjectMapper mapper = new ObjectMapper();
+                cities = mapper.readTree(new File("cities.json"));
+                if(cities.isArray()){
+                    //
+                }else{
+                    //
+                    cities = new JsonNode() {
+                    };
+                }
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+
         //dates
         LocalDate today = LocalDate.now();
         dateStart.setValue(today.minusDays(1)); // Yesterday
         dateEnd.setValue(today.plusDays(1));    // Tomorrow
 
-        //choiceType
-        choiceType.getItems().addAll(dataTypes);
-        choiceType.setValue(dataTypes[0]);
+        //choiceLocationType
+        choiceLocationType.getItems().addAll(locationTypes);
+        choiceLocationType.setValue(locationTypes[0]);
+
+        //choiceDataType
+        choiceDataType.getItems().addAll(dataTypes);
+        choiceDataType.setValue(dataTypes[0]);
+
+        //choiceCity
+        String[] arr = new String[cities.size()];
+        for(int i = 0; i < cities.size(); i++){
+            arr[i] = cities.get(i).get("name").asText();
+        }
 
         //numeric types
         numericLatitude.setTextFormatter(new TextFormatter<>(change -> {
@@ -53,6 +92,9 @@ public class PanelStart {
         numericLongitude.setTextFormatter(new TextFormatter<>(change -> {
             return change.getControlNewText().matches("\\d*(\\.\\d*)?") ? change : null;
         }));
+
+        //numericLongitude.setVisible(false);
+        //numericLatitude.setVisible(false);
     }
 
     private static String findDataTypeName(String dataType) {
@@ -72,10 +114,25 @@ public class PanelStart {
         }
     }
 
+    @FXML protected void onChoiceLocationTypeSelect() {
+        //value
+        boolean b = choiceLocationType.getValue().toString().equalsIgnoreCase(locationTypes[0]);
+        //first option
+        labelLatitude.setVisible(b);
+        labelLongitude.setVisible(b);
+        numericLatitude.setVisible(b);
+        numericLongitude.setVisible(b);
+        //switch
+        b = !b;
+        //second option
+        labelCity.setVisible(b);
+        choiceCity.setVisible(b);
+    }
+
     //Chart button clicked
     @FXML protected void onButtonChartClicked() {
         //compose API request
-        String url = findDataTypeName(choiceType.getValue().toString());
+        String url = findDataTypeName(choiceDataType.getValue().toString());
         if(url == null){
             //error
             return;
