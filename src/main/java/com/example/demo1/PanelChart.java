@@ -50,7 +50,7 @@ public class PanelChart {
                 //try
                 if(ProcessData(data))
                     //cache
-                    RedisCacheService.cacheData(url, data, 5);
+                    RedisCacheService.cacheData(url, data, 60 * 60);
                 else
                     FailedData();
             }
@@ -131,6 +131,6 @@ public class PanelChart {
 
     //Failure
     void FailedData(){
-        labelTitle.setText("Failed: ");
+        labelTitle.setText("Failed.");
     }
 }
