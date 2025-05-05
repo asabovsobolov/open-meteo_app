@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.File;
 import java.io.IOException;
-
+import java.io.InputStream;
 
 public class PanelStart {
 
@@ -50,21 +50,23 @@ public class PanelStart {
 
     public void Init(){
         //cities
+        ObjectMapper mapper = new ObjectMapper();
         if(cities == null){
             try{
-                ObjectMapper mapper = new ObjectMapper();
-                cities = mapper.readTree(new File("cities.json"));
-                if(cities.isArray()){
-                    //
-                }else{
-                    //
-                    cities = new JsonNode() {
-                    };
-                }
+                cities = mapper.readTree(Main.class.getResource("cities.json"));
+                if(!cities.isArray())
+                    cities = null;
             }catch(IOException e){
                 e.printStackTrace();
             }
         }
+        if(cities == null)
+            try {
+                cities = mapper.readTree("[ { \"name\":\"Hyperborea\", \"latitude\":0, \"longitude\":0 } ]");
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
 
         //dates
         LocalDate today = LocalDate.now();
@@ -73,17 +75,18 @@ public class PanelStart {
 
         //choiceLocationType
         choiceLocationType.getItems().addAll(locationTypes);
-        choiceLocationType.setValue(locationTypes[0]);
+        choiceLocationType.getSelectionModel().select(0);
 
         //choiceDataType
         choiceDataType.getItems().addAll(dataTypes);
-        choiceDataType.setValue(dataTypes[0]);
+        choiceDataType.getSelectionModel().select(0);
 
         //choiceCity
         String[] arr = new String[cities.size()];
-        for(int i = 0; i < cities.size(); i++){
+        for(int i = 0; i < cities.size(); i++)
             arr[i] = cities.get(i).get("name").asText();
-        }
+        choiceCity.getItems().addAll(arr);
+        choiceCity.getSelectionModel().select(0);
 
         //numeric types
         numericLatitude.setTextFormatter(new TextFormatter<>(change -> {
@@ -95,13 +98,6 @@ public class PanelStart {
 
         //numericLongitude.setVisible(false);
         //numericLatitude.setVisible(false);
-    }
-
-    private static String findDataTypeName(String dataType) {
-        for(int i = 0; i < dataTypes.length; i++)
-            if(dataTypes[i].equalsIgnoreCase(dataType))
-                return dataTypesSRC[i];
-        return null; // or throw an exception if not found
     }
 
     private void findCheckBoxes(Parent parent, List<CheckBox> checkBoxes) {
@@ -129,10 +125,27 @@ public class PanelStart {
         choiceCity.setVisible(b);
     }
 
+    @FXML protected void onChoiceCitySelect() {
+        //get index
+        int i = choiceCity.getSelectionModel().getSelectedIndex();
+        if(i < 0)
+            return;
+
+        //get city
+        JsonNode city = cities.get(i);
+
+        //update numerics
+        numericLatitude.setText(city.get("latitude").asText());
+        numericLongitude.setText(city.get("longitude").asText());
+    }
+
     //Chart button clicked
     @FXML protected void onButtonChartClicked() {
         //compose API request
-        String url = findDataTypeName(choiceDataType.getValue().toString());
+        int i = choiceDataType.getSelectionModel().getSelectedIndex();
+        if(i < 0)
+            return;
+        String url = dataTypesSRC[i];
         if(url == null){
             //error
             return;

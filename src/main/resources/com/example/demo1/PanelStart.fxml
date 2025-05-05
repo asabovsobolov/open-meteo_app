@@ -65,6 +65,6 @@
       <Label layoutX="5.0" layoutY="5.0" text="Location Type:" AnchorPane.leftAnchor="5.0" />
       <ChoiceBox fx:id="choiceLocationType" layoutX="87.0" layoutY="1.0" onAction="#onChoiceLocationTypeSelect" prefWidth="150.0" AnchorPane.leftAnchor="87.0" />
       <Label fx:id="labelCity" layoutX="247.0" layoutY="5.0" text="City:" AnchorPane.leftAnchor="247.0" />
-      <ChoiceBox fx:id="choiceCity" layoutX="273.0" layoutY="1.0" prefWidth="150.0" AnchorPane.leftAnchor="273.0" />
+      <ChoiceBox fx:id="choiceCity" layoutX="273.0" layoutY="1.0" prefWidth="150.0" AnchorPane.leftAnchor="273.0" onAction="#onChoiceCitySelect"/>
    </children>
 </AnchorPane>
