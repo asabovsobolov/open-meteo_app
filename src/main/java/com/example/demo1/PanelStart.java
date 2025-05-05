@@ -112,7 +112,7 @@ public class PanelStart {
 
     @FXML protected void onChoiceLocationTypeSelect() {
         //value
-        boolean b = choiceLocationType.getValue().toString().equalsIgnoreCase(locationTypes[0]);
+        boolean b = choiceLocationType.getSelectionModel().getSelectedIndex() == 0;
         //first option
         labelLatitude.setVisible(b);
         labelLongitude.setVisible(b);
