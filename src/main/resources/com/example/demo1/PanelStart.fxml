@@ -52,11 +52,11 @@
       <CheckBox layoutX="569.0" layoutY="180.0" mnemonicParsing="false" text="Soil Moisture (3-9 cm)" userData="soil_moisture_3_to_9cm" AnchorPane.leftAnchor="569.0" />
       <CheckBox layoutX="569.0" layoutY="197.0" mnemonicParsing="false" text="Soil Moisture (9-27 cm)" userData="soil_moisture_9_to_27cm" AnchorPane.leftAnchor="569.0" />
       <CheckBox layoutX="569.0" layoutY="214.0" mnemonicParsing="false" text="Soil Moisture (27-81 cm)" userData="soil_moisture_27_to_81cm" AnchorPane.leftAnchor="569.0" />
-      <DatePicker fx:id="dateStart" layoutX="33.0" layoutY="35.0" AnchorPane.leftAnchor="33.0" />
-      <DatePicker fx:id="dateEnd" layoutX="247.0" layoutY="35.0" AnchorPane.leftAnchor="247.0" />
+      <DatePicker fx:id="dateStart" layoutX="33.0" layoutY="35.0" AnchorPane.leftAnchor="33.0" onAction="#CorrectDates"/>
+      <DatePicker fx:id="dateEnd" layoutX="247.0" layoutY="35.0" AnchorPane.leftAnchor="247.0" onAction="#CorrectDates"/>
       <Label layoutY="39.0" text="Start:" AnchorPane.leftAnchor="0.0" />
       <Label layoutX="215.0" layoutY="39.0" text="End:" AnchorPane.leftAnchor="215.0" />
-      <ChoiceBox fx:id="choiceDataType" layoutX="467.0" layoutY="35.0" prefWidth="150.0" AnchorPane.leftAnchor="467.0" />
+      <ChoiceBox fx:id="choiceDataType" layoutX="467.0" layoutY="35.0" prefWidth="150.0" AnchorPane.leftAnchor="467.0" onAction="#onChoiceDataTypeSelect"/>
       <Label layoutX="430.0" layoutY="39.0" text="Type:" AnchorPane.leftAnchor="430.0" />
       <TextField fx:id="numericLatitude" layoutX="304.0" layoutY="1.0" prefHeight="25.0" prefWidth="87.0" text="0" visible="false" AnchorPane.leftAnchor="304.0" />
       <Label fx:id="labelLatitude" layoutX="252.0" layoutY="5.0" text="Latitude:" visible="false" AnchorPane.leftAnchor="252.0" />

@@ -25,7 +25,7 @@ import java.io.IOException;
 public class PanelChart {
 
     //GUI
-    @FXML private Label testText;
+    @FXML private Label labelTitle;
     @FXML private LineChart<String, Number> lineChart;
     @FXML private Button buttonExport;
 
@@ -33,7 +33,9 @@ public class PanelChart {
     private JsonNode data = null;
 
     //Init
-    void Init(String url){
+    void Init(String title, String url){
+        //set title
+        labelTitle.setText(title);
 
         //Check Cache
         String cached = RedisCacheService.getCachedData(url);
@@ -129,6 +131,6 @@ public class PanelChart {
 
     //Failure
     void FailedData(){
-        testText.setText("Failed: ");
+        labelTitle.setText("Failed: ");
     }
 }

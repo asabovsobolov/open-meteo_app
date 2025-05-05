@@ -34,6 +34,7 @@ public class PanelStart {
     public static String[] dataTypesSRC = {"https://api.open-meteo.com/v1/forecast?", "https://archive-api.open-meteo.com/v1/archive?"};
     public static String[] locationTypes = {"Latitude, Longitude", "City"};
     public static JsonNode cities = null;
+    public static LocalDate maxDate = null;
 
     //GUI
     @FXML private Button buttonChart;
@@ -68,11 +69,6 @@ public class PanelStart {
                 e.printStackTrace();
             }
 
-        //dates
-        LocalDate today = LocalDate.now();
-        dateStart.setValue(today.minusDays(1)); // Yesterday
-        dateEnd.setValue(today.plusDays(1));    // Tomorrow
-
         //choiceLocationType
         choiceLocationType.getItems().addAll(locationTypes);
         choiceLocationType.getSelectionModel().select(0);
@@ -96,8 +92,10 @@ public class PanelStart {
             return change.getControlNewText().matches("\\d*(\\.\\d*)?") ? change : null;
         }));
 
-        //numericLongitude.setVisible(false);
-        //numericLatitude.setVisible(false);
+        //dates
+        LocalDate today = LocalDate.now();
+        dateStart.setValue(today.minusDays(1)); // Yesterday
+        dateEnd.setValue(today.plusDays(1));    // Tomorrow
     }
 
     private void findCheckBoxes(Parent parent, List<CheckBox> checkBoxes) {
@@ -108,6 +106,33 @@ public class PanelStart {
                 findCheckBoxes((Parent) node, checkBoxes); // Recursive
             }
         }
+    }
+
+    @FXML protected void CorrectDates(){
+        LocalDate newValue;
+
+        //=================================================================
+        newValue = dateEnd.getValue();
+
+        //check max
+        if (maxDate != null)
+            if (newValue.isAfter(maxDate))
+                newValue = maxDate;
+        //set
+        dateEnd.setValue(newValue);
+
+        //=================================================================
+        newValue = dateStart.getValue();
+
+        //check max
+        if (maxDate != null)
+            if (newValue.isAfter(maxDate))
+                newValue = dateEnd.getValue();
+        //check dateEnd
+        if(newValue.isAfter(dateEnd.getValue()))
+            newValue = dateEnd.getValue();
+        //set
+        dateStart.setValue(newValue);
     }
 
     @FXML protected void onChoiceLocationTypeSelect() {
@@ -123,6 +148,8 @@ public class PanelStart {
         //second option
         labelCity.setVisible(b);
         choiceCity.setVisible(b);
+        if(b)
+            onChoiceCitySelect();
     }
 
     @FXML protected void onChoiceCitySelect() {
@@ -139,16 +166,38 @@ public class PanelStart {
         numericLongitude.setText(city.get("longitude").asText());
     }
 
+    @FXML protected void onChoiceDataTypeSelect() {
+        //correct dates
+        if(choiceDataType.getSelectionModel().getSelectedIndex() == 0){
+            //Forecast
+            maxDate = null;
+        }
+        else{
+            //Archive
+            maxDate = LocalDate.now().minusDays(1);
+        }
+
+        //re-valid
+        CorrectDates();
+    }
+
     //Chart button clicked
     @FXML protected void onButtonChartClicked() {
         //compose API request
         int i = choiceDataType.getSelectionModel().getSelectedIndex();
         if(i < 0)
             return;
+
+        //url
         String url = dataTypesSRC[i];
-        if(url == null){
-            //error
-            return;
+
+        //title - coordinates/city
+        String title = dataTypes[i] + " of ";
+        if(numericLatitude.isVisible()){
+            title += numericLatitude.getText() + "° ," + numericLongitude.getText() + "°";
+        }
+        else {
+            title += cities.get(choiceCity.getSelectionModel().getSelectedIndex()).get("name").asText();
         }
 
         //latidue longitude
@@ -175,29 +224,24 @@ public class PanelStart {
         }
 
         //add dates
-        url += "&start_date=";
-        url += dateStart.getValue().toString();
-        url += "&end_date=";
-        url += dateEnd.getValue().toString();
+        url += "&start_date=" + dateStart.getValue().toString() + "&end_date=" + dateEnd.getValue().toString();
 
-        System.out.println(url);
+        //title - dates
+        title += " from " + dateStart.getValue().toString() + " to " + dateEnd.getValue().toString();
 
-        //cacheService.getCachedData("gag");
-        //welcomeText.setText(cacheService.getCachedData("gag"));
-        //cacheService.cacheData("gag","hello",10);
+        //Create new window
         try {
-
             // Load the FXML file for the new window
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PanelChart.fxml"));
             AnchorPane root = fxmlLoader.load(); // Load the layout from the FXML file
 
             //init
             PanelChart controller = fxmlLoader.getController();
-            controller.Init(url);
+            controller.Init(title, url);
 
             // Create a new Stage (window) for the new panel
             Stage stage = new Stage();
-            stage.setTitle("Chart Panel");
+            stage.setTitle(title);
 
             // Set the scene with the loaded layout
             Scene scene = new Scene(root);
@@ -208,7 +252,5 @@ public class PanelStart {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }
