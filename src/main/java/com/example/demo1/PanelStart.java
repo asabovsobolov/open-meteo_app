@@ -93,9 +93,7 @@ public class PanelStart {
         }));
 
         //dates
-        LocalDate today = LocalDate.now();
-        dateStart.setValue(today.minusDays(1)); // Yesterday
-        dateEnd.setValue(today.plusDays(1));    // Tomorrow
+        CorrectDates();
     }
 
     private void findCheckBoxes(Parent parent, List<CheckBox> checkBoxes) {
@@ -113,6 +111,8 @@ public class PanelStart {
 
         //=================================================================
         newValue = dateEnd.getValue();
+        if(newValue == null)
+            newValue = LocalDate.now().plusDays(1);
 
         //check max
         if (maxDate != null)
@@ -123,6 +123,8 @@ public class PanelStart {
 
         //=================================================================
         newValue = dateStart.getValue();
+        if(newValue == null)
+            newValue = LocalDate.now().minusDays(1);
 
         //check max
         if (maxDate != null)
