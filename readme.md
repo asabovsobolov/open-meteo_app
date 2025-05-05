@@ -19,5 +19,5 @@ docker stop redis-weather
 ```
 mvn clean package
 ```
-The output `.jar` should be in `/target` folder.
+The output `.jar` file should be in `target` folder.
 
