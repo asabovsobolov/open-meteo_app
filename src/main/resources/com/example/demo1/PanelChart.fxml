@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="399.0" prefWidth="519.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.PanelChart">
+<AnchorPane prefHeight="399.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.PanelChart">
    <children>
-      <LineChart fx:id="lineChart" animated="false" layoutX="7.0" layoutY="48.0" prefHeight="291.0" prefWidth="509.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="48.0">
+      <LineChart createSymbols="false" fx:id="lineChart" animated="false" layoutX="-1.0" layoutY="48.0" prefHeight="291.0" prefWidth="693.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="48.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
