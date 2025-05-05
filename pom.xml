@@ -145,7 +145,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>open_meteo_app.App</mainClass>
+                            <mainClass>open_meteo_app.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -159,7 +159,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>open_meteo_app.App</mainClass>
+                            <mainClass>open_meteo_app.Main</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
