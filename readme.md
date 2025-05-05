@@ -3,6 +3,10 @@
 This very simple JavaFX application showcases the use of [Open-meteo API](https://open-meteo.com/en/docs).
 It presents charts of archive or forecast data of cities/geo-locations.
 
+## Requirements
+
+Java `>=21.0.0` - recommended, as this was the version I aimed for.
+
 ## Redis support - *optional*
 
 This application supports caching via Redis that runs on `localhost:6379`
