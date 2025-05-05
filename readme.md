@@ -16,5 +16,8 @@ docker stop redis-weather
 
 ## Building
 
-It can be built with IntelliJ IDEA by going to `Build/Build Artifacts.../Open-meteo App:jar/Build`.
+```
+mvn clean package
+```
+The output `.jar` should be in `/target` folder.
 
