@@ -1,4 +1,4 @@
-package com.example.demo1;
+package open_meteo_app;
 
 public interface DataCallback {
     void onSuccess(String data);

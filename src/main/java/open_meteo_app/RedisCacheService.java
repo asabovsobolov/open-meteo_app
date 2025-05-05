@@ -1,4 +1,4 @@
-package com.example.demo1;
+package open_meteo_app;
 
 import redis.clients.jedis.Jedis;
 

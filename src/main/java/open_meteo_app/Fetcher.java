@@ -1,4 +1,4 @@
-package com.example.demo1;
+package open_meteo_app;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

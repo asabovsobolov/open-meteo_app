@@ -1,4 +1,4 @@
-package com.example.demo1;
+package open_meteo_app;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,10 +8,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Main extends Application {
+public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PanelStart.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("PanelStart.fxml"));
         AnchorPane root = fxmlLoader.load(); // Load the layout from the FXML file
 
         //init

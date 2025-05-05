@@ -1,4 +1,4 @@
-module com.example.demo1 {
+module open_meteo_app {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -15,6 +15,6 @@ module com.example.demo1 {
     requires redis.clients.jedis;
     requires com.fasterxml.jackson.databind;
 
-    opens com.example.demo1 to javafx.fxml;
-    exports com.example.demo1;
+    opens open_meteo_app to javafx.fxml;
+    exports open_meteo_app;
 }

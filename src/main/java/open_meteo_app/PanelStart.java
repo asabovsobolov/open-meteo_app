@@ -1,10 +1,9 @@
-package com.example.demo1;
+package open_meteo_app;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 
-import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -15,7 +14,6 @@ import java.io.IOException;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +21,6 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class PanelStart {
 
@@ -54,7 +49,7 @@ public class PanelStart {
         ObjectMapper mapper = new ObjectMapper();
         if(cities == null){
             try{
-                cities = mapper.readTree(Main.class.getResource("cities.json"));
+                cities = mapper.readTree(App.class.getResource("cities.json"));
                 if(!cities.isArray())
                     cities = null;
             }catch(IOException e){

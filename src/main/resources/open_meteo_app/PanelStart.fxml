@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.PanelStart">
+<AnchorPane prefHeight="400.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="open_meteo_app.PanelStart">
    <children>
       <Button fx:id="buttonChart" layoutX="767.0" layoutY="281.0" mnemonicParsing="false" onAction="#onButtonChartClicked" text="View Chart" AnchorPane.rightAnchor="0.6666666666666288" AnchorPane.topAnchor="281.0" />
       <CheckBox layoutY="78.0" mnemonicParsing="false" text="Temperature (2 m)" userData="temperature_2m" AnchorPane.leftAnchor="0.0" />
