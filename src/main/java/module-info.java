@@ -14,6 +14,7 @@ module open_meteo_app {
     //
     requires redis.clients.jedis;
     requires com.fasterxml.jackson.databind;
+    requires com.opencsv;
 
     opens open_meteo_app to javafx.fxml;
     exports open_meteo_app;

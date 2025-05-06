@@ -21,14 +21,20 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.opencsv.CSVReaderHeaderAware;
+import java.util.Map;
+import java.io.InputStreamReader;
 
 public class PanelStart {
 
     //consts
-    public static String[] dataTypes = {"Forecast", "Archive"};
-    public static String[] dataTypesSRC = {"https://api.open-meteo.com/v1/forecast?", "https://archive-api.open-meteo.com/v1/archive?"};
-    public static String[] locationTypes = {"Latitude, Longitude", "City"};
-    public static JsonNode cities = null;
+    public static final String[] dataTypes = {"Forecast", "Archive"};
+    public static final String[] dataTypesSRC = {"https://api.open-meteo.com/v1/forecast?", "https://archive-api.open-meteo.com/v1/archive?"};
+    public static final String[] locationTypes = {"Latitude, Longitude", "City"};
+    public static final List<City> cities =  new ArrayList<>();
+    public static final int maxCitiesCount = 500;
+
+    //vars
     public static LocalDate maxDate = null;
 
     //GUI
@@ -47,22 +53,22 @@ public class PanelStart {
     public void Init(){
         //cities
         ObjectMapper mapper = new ObjectMapper();
-        if(cities == null){
-            try{
-                cities = mapper.readTree(App.class.getResource("cities.json"));
-                if(!cities.isArray())
-                    cities = null;
-            }catch(IOException e){
+        if(cities.size() <= 0){
+            try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(
+                    new InputStreamReader(App.class.getResourceAsStream("worldcities.csv")))) {
+                Map<String, String> row;
+                int i = 0;
+                while ((row = reader.readMap()) != null) {
+                    cities.add(new City(row.get("city"), Double.parseDouble(row.get("lat")), Double.parseDouble(row.get("lng"))));
+                    if(++i >= maxCitiesCount)
+                        break;
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        if(cities == null)
-            try {
-                cities = mapper.readTree("[ { \"name\":\"Hyperborea\", \"latitude\":0, \"longitude\":0 } ]");
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
+        if(cities.size() <= 0)
+            cities.add(new City("Hyperborea", 0, 0));
 
         //choiceLocationType
         choiceLocationType.getItems().addAll(locationTypes);
@@ -75,7 +81,7 @@ public class PanelStart {
         //choiceCity
         String[] arr = new String[cities.size()];
         for(int i = 0; i < cities.size(); i++)
-            arr[i] = cities.get(i).get("name").asText();
+            arr[i] = cities.get(i).name;
         choiceCity.getItems().addAll(arr);
         choiceCity.getSelectionModel().select(0);
 
@@ -156,11 +162,11 @@ public class PanelStart {
             return;
 
         //get city
-        JsonNode city = cities.get(i);
+        City city = cities.get(i);
 
         //update numerics
-        numericLatitude.setText(city.get("latitude").asText());
-        numericLongitude.setText(city.get("longitude").asText());
+        numericLatitude.setText(String.valueOf(city.latitude));
+        numericLongitude.setText(String.valueOf(city.longitude));
     }
 
     @FXML protected void onChoiceDataTypeSelect() {
@@ -194,7 +200,7 @@ public class PanelStart {
             title += numericLatitude.getText() + "° ," + numericLongitude.getText() + "°";
         }
         else {
-            title += cities.get(choiceCity.getSelectionModel().getSelectedIndex()).get("name").asText();
+            title += cities.get(choiceCity.getSelectionModel().getSelectedIndex()).name;
         }
 
         //latidue longitude
@@ -219,6 +225,8 @@ public class PanelStart {
             //add param name
             url += cb.getUserData().toString();
         }
+        if(!isAnother)
+            return;
 
         //add dates
         url += "&start_date=" + dateStart.getValue().toString() + "&end_date=" + dateEnd.getValue().toString();
