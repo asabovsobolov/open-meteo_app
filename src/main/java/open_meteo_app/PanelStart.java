@@ -191,6 +191,14 @@ public class PanelStart {
         if(i < 0)
             return;
 
+        //ttl
+        int ttl = 0;
+        if(i == 0){
+            ttl = 10 * 60;
+        }else{
+            ttl = 2 * 60 * 60;
+        }
+
         //url
         String url = dataTypesSRC[i];
 
@@ -242,7 +250,7 @@ public class PanelStart {
 
             //init
             PanelChart controller = fxmlLoader.getController();
-            controller.Init(title, url);
+            controller.Init(title, url, ttl);
 
             // Create a new Stage (window) for the new panel
             Stage stage = new Stage();

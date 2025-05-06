@@ -27,7 +27,7 @@ public class PanelChart {
     private JsonNode data = null;
 
     //Init
-    void Init(String title, String url){
+    void Init(String title, String url, int ttl){
         //set title
         labelTitle.setText(title);
 
@@ -44,7 +44,7 @@ public class PanelChart {
                 //try
                 if(ProcessData(data))
                     //cache
-                    RedisCacheService.cacheData(url, data, 60 * 60);
+                    RedisCacheService.cacheData(url, data, ttl);
                 else
                     FailedData();
             }
