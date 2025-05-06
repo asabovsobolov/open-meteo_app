@@ -9,12 +9,16 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Iterator;
 import java.util.Map;
 import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
 
 public class PanelChart {
 
@@ -55,6 +59,29 @@ public class PanelChart {
         });
     }
 
+    void TrimData() {
+        ObjectNode d = (ObjectNode) data;
+
+        String[] requiredParamNames = {"hourly", "hourly_units", "time"};
+        List<String> toRemove = new ArrayList<>();
+
+        //Phase 1: Collect fields to remove
+        Iterator<Map.Entry<String, JsonNode>> fields = d.fields();
+        while(fields.hasNext()){
+            String paramName = fields.next().getKey();
+            if(!Arrays.asList(requiredParamNames).contains(paramName))
+                toRemove.add(paramName);
+        }
+
+        //Phase 2: Remove fields
+        for(String key : toRemove){
+            d.remove(key);
+        }
+
+        //Add custom field
+        d.put("title", labelTitle.getText());
+    }
+
     //returns true if data is vaild
     boolean ProcessData(String response){
         try{
@@ -71,14 +98,15 @@ public class PanelChart {
             JsonNode dx = json.get("time");
             JsonNode dy;
 
-            //
+            //building series and adding them to chart
             XYChart.Series<String, Number> series;
             Iterator<Map.Entry<String, JsonNode>> fields = json.fields();
             int i;
             int f = dx.size();
+            String paramName;
             while(fields.hasNext()){
                 //get key different from time
-                String paramName = fields.next().getKey();
+                paramName = fields.next().getKey();
                 if(paramName == "time")
                     continue;
 
@@ -94,6 +122,8 @@ public class PanelChart {
                 //apply to chart
                 lineChart.getData().add(series);
             }
+            //trim data (so the export contains only necessary info)
+            TrimData();
             //value
             return true;
         }
@@ -126,5 +156,7 @@ public class PanelChart {
     //Failure
     void FailedData(){
         labelTitle.setText("Failed.");
+        lineChart.getData().clear();
+        buttonExport.setDisable(true);
     }
 }
