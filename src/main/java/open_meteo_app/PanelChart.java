@@ -22,18 +22,22 @@ import java.util.ArrayList;
 
 public class PanelChart {
 
+    //vars
+    private JsonNode data = null;
+    private String query;
+
     //GUI
     @FXML private Label labelTitle;
     @FXML private LineChart<String, Number> lineChart;
     @FXML private Button buttonExport;
 
-    //vars
-    private JsonNode data = null;
-
     //Init
     void Init(String title, String url, int ttl){
         //set title
         labelTitle.setText(title);
+
+        //set query
+        query = url;
 
         //Check Cache
         String cached = RedisCacheService.getCachedData(url);
@@ -80,6 +84,7 @@ public class PanelChart {
 
         //Add custom field
         d.put("title", labelTitle.getText());
+        d.put("query", query);
     }
 
     //returns true if data is vaild
