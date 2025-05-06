@@ -238,6 +238,8 @@ public class PanelStart {
 
         //add dates
         url += "&start_date=" + dateStart.getValue().toString() + "&end_date=" + dateEnd.getValue().toString();
+        //timezone
+        url += "&timezone=auto";
 
         //title - dates
         title += " from " + dateStart.getValue().toString() + " to " + dateEnd.getValue().toString();
