@@ -42,9 +42,11 @@ public class PanelChart {
         //Check Cache
         String cached = RedisCacheService.getCachedData(url);
         if(cached != null){
-            ProcessData(cached);
-            return;
+            if(ProcessData(cached))
+                return;
+            //failed to process cached data
         }
+        System.out.println("Query: " + query);
 
         //Fetch and Cache
         new Fetcher().fetchData(url, new DataCallback() {
