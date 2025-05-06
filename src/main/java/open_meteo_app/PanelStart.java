@@ -94,7 +94,7 @@ public class PanelStart {
         }));
 
         //dates
-        CorrectDates();
+        onChoiceDataTypeSelect();
     }
 
     private void findCheckBoxes(Parent parent, List<CheckBox> checkBoxes) {
@@ -173,7 +173,7 @@ public class PanelStart {
         //correct dates
         if(choiceDataType.getSelectionModel().getSelectedIndex() == 0){
             //Forecast
-            maxDate = null;
+            maxDate = LocalDate.now().plusDays(15);
         }
         else{
             //Archive
